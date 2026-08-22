@@ -82,10 +82,9 @@ describe("readMessageStreamFully", () => {
   it("safety bound caps pathological readers at 1024 iterations", () => {
     // A stream that always reports 1 byte available and returns 1 byte should
     // terminate by the safety bound, not run forever.
-    let cursor = 0;
     const stream = {
       available() { return 1; },
-      read() { cursor++; return "a"; },
+      read() { return "a"; },
     };
     const result = readMessageStreamFully(stream, undefined, readChunk);
     assert.equal(result.length, 1024);
